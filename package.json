@@ -1,0 +1,42 @@
+{
+  "private": true,
+  "name": "browser-builds-react-native",
+  "version": "1.0.1",
+  "description": "Browser builds of ethereumjs libraries.",
+  "scripts": {
+    "build": "./build.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WoeOm/browser-builds-react-native.git"
+  },
+  "keywords": [
+    "ethereum",
+    "browser",
+    "react-native"
+  ],
+  "author": "WoeOm <wanbei0322@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WoeOm/browser-builds-react-native/issues"
+  },
+  "homepage": "https://github.com/WoeOm/browser-builds-react-native#readme",
+  "dependencies": {
+    "babel-polyfill": "^6.23.0",
+    "babel-runtime": "^6.25.0",
+    "ethereumjs-abi": "0.6.4",
+    "ethereumjs-icap": "0.3.1",
+    "ethereumjs-tx": "1.3.3",
+    "ethereumjs-units": "0.2.0",
+    "ethereumjs-vm": "^2.2.1",
+    "ethereumjs-wallet": "^0.6.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "json-loader": "^0.5.7"
+  }
+}
