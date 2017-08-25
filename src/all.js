@@ -11,7 +11,7 @@ global.EthJs = {
   Units: require('ethereumjs-units'),
   Util: require('ethereumjs-util'),
   VM: require('ethereumjs-vm'),
-  Wallet: require('ethereumjs-wallet'),
-  WalletHD: require('ethereumjs-wallet/hdkey'),
-  WalletThirdparty: require('ethereumjs-wallet/thirdparty')
+  Wallet: require('ethereumjs-wallet-react-native'),
+  WalletHD: require('ethereumjs-wallet-react-native/hdkey'),
+  WalletThirdparty: require('ethereumjs-wallet-react-native/thirdparty')
 }

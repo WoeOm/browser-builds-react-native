@@ -21445,7 +21445,7 @@ module.exports = CipherBase
 /* 110 */
 /***/ (function(module, exports) {
 
-module.exports = {"_from":"elliptic@^6.2.3","_id":"elliptic@6.4.0","_inBundle":false,"_integrity":"sha1-ysmvh2LIWDYYcAPI3+GT5eLq5d8=","_location":"/elliptic","_phantomChildren":{},"_requested":{"type":"range","registry":true,"raw":"elliptic@^6.2.3","name":"elliptic","escapedName":"elliptic","rawSpec":"^6.2.3","saveSpec":null,"fetchSpec":"^6.2.3"},"_requiredBy":["/secp256k1"],"_resolved":"http://registry.npm.taobao.org/elliptic/download/elliptic-6.4.0.tgz","_shasum":"cac9af8762c85836187003c8dfe193e5e2eae5df","_spec":"elliptic@^6.2.3","_where":"/Users/beiwan/Downloads/browser-builds-master/node_modules/secp256k1","author":{"name":"Fedor Indutny","email":"fedor@indutny.com"},"bugs":{"url":"https://github.com/indutny/elliptic/issues"},"bundleDependencies":false,"dependencies":{"bn.js":"^4.4.0","brorand":"^1.0.1","hash.js":"^1.0.0","hmac-drbg":"^1.0.0","inherits":"^2.0.1","minimalistic-assert":"^1.0.0","minimalistic-crypto-utils":"^1.0.0"},"deprecated":false,"description":"EC cryptography","devDependencies":{"brfs":"^1.4.3","coveralls":"^2.11.3","grunt":"^0.4.5","grunt-browserify":"^5.0.0","grunt-cli":"^1.2.0","grunt-contrib-connect":"^1.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-uglify":"^1.0.1","grunt-mocha-istanbul":"^3.0.1","grunt-saucelabs":"^8.6.2","istanbul":"^0.4.2","jscs":"^2.9.0","jshint":"^2.6.0","mocha":"^2.1.0"},"files":["lib"],"homepage":"https://github.com/indutny/elliptic","keywords":["EC","Elliptic","curve","Cryptography"],"license":"MIT","main":"lib/elliptic.js","name":"elliptic","repository":{"type":"git","url":"git+ssh://git@github.com/indutny/elliptic.git"},"scripts":{"jscs":"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js","jshint":"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js","lint":"npm run jscs && npm run jshint","test":"npm run lint && npm run unit","unit":"istanbul test _mocha --reporter=spec test/index.js","version":"grunt dist && git add dist/"},"version":"6.4.0"}
+module.exports = {"_args":[["elliptic@6.4.0","/Users/beiwan/Downloads/browser-builds-master"]],"_from":"elliptic@6.4.0","_id":"elliptic@6.4.0","_inBundle":false,"_integrity":"sha1-ysmvh2LIWDYYcAPI3+GT5eLq5d8=","_location":"/elliptic","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"elliptic@6.4.0","name":"elliptic","escapedName":"elliptic","rawSpec":"6.4.0","saveSpec":null,"fetchSpec":"6.4.0"},"_requiredBy":["/secp256k1"],"_resolved":"http://registry.npm.taobao.org/elliptic/download/elliptic-6.4.0.tgz","_spec":"6.4.0","_where":"/Users/beiwan/Downloads/browser-builds-master","author":{"name":"Fedor Indutny","email":"fedor@indutny.com"},"bugs":{"url":"https://github.com/indutny/elliptic/issues"},"dependencies":{"bn.js":"^4.4.0","brorand":"^1.0.1","hash.js":"^1.0.0","hmac-drbg":"^1.0.0","inherits":"^2.0.1","minimalistic-assert":"^1.0.0","minimalistic-crypto-utils":"^1.0.0"},"description":"EC cryptography","devDependencies":{"brfs":"^1.4.3","coveralls":"^2.11.3","grunt":"^0.4.5","grunt-browserify":"^5.0.0","grunt-cli":"^1.2.0","grunt-contrib-connect":"^1.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-uglify":"^1.0.1","grunt-mocha-istanbul":"^3.0.1","grunt-saucelabs":"^8.6.2","istanbul":"^0.4.2","jscs":"^2.9.0","jshint":"^2.6.0","mocha":"^2.1.0"},"files":["lib"],"homepage":"https://github.com/indutny/elliptic","keywords":["EC","Elliptic","curve","Cryptography"],"license":"MIT","main":"lib/elliptic.js","name":"elliptic","repository":{"type":"git","url":"git+ssh://git@github.com/indutny/elliptic.git"},"scripts":{"jscs":"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js","jshint":"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js","lint":"npm run jscs && npm run jshint","test":"npm run lint && npm run unit","unit":"istanbul test _mocha --reporter=spec test/index.js","version":"grunt dist && git add dist/"},"version":"6.4.0"}
 
 /***/ }),
 /* 111 */
@@ -27185,16 +27185,31 @@ Object.defineProperty(Wallet.prototype, 'pubKey', {
   }
 })
 
-Wallet.generate = function (icapDirect) {
+Wallet.generate = async function (icapDirect) {
   if (icapDirect) {
     while (true) {
-      var privKey = crypto.randomBytes(32)
+      var privKey = await window.randomBytes(32)
       if (ethUtil.privateToAddress(privKey)[0] === 0) {
         return new Wallet(privKey)
       }
     }
   } else {
-    return new Wallet(crypto.randomBytes(32))
+    return new Wallet(await window.randomBytes(32))
+  }
+}
+
+Wallet.generateVanityAddress = async function (pattern) {
+  if (typeof pattern !== 'object') {
+    pattern = new RegExp(pattern)
+  }
+
+  while (true) {
+    var privKey = await window.randomBytes(32)
+    var address = ethUtil.privateToAddress(privKey)
+
+    if (pattern.test(address.toString('hex'))) {
+      return new Wallet(privKey)
+    }
   }
 }
 
@@ -27227,12 +27242,12 @@ Wallet.prototype.getChecksumAddressString = function () {
 }
 
 // https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition
-Wallet.prototype.toV3 = function (password, opts) {
+Wallet.prototype.toV3 = async function (password, opts) {
   assert(this._privKey, 'This is a public key only wallet')
 
   opts = opts || {}
-  var salt = opts.salt || crypto.randomBytes(32)
-  var iv = opts.iv || crypto.randomBytes(16)
+  var salt = opts.salt || await window.randomBytes(32)
+  var iv = opts.iv || await window.randomBytes(16)
 
   var derivedKey
   var kdf = opts.kdf || 'scrypt'
@@ -27266,7 +27281,7 @@ Wallet.prototype.toV3 = function (password, opts) {
 
   return {
     version: 3,
-    id: uuid.v4({ random: opts.uuid || crypto.randomBytes(16) }),
+    id: uuid.v4({ random: opts.uuid || await window.randomBytes(16) }),
     address: this.getAddress().toString('hex'),
     crypto: {
       ciphertext: ciphertext.toString('hex'),

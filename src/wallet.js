@@ -5,5 +5,5 @@ global.EthJs = {
   RLP: require('ethereumjs-util').rlp,
   Tx: require('ethereumjs-tx'),
   Util: require('ethereumjs-util'),
-  Wallet: require('ethereumjs-wallet')
+  Wallet: require('ethereumjs-wallet-react-native')
 }
