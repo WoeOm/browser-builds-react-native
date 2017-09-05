@@ -33080,7 +33080,20 @@ var crypto = __webpack_require__(143)
 var scryptsy = __webpack_require__(183)
 var uuid = __webpack_require__(257)
 var bs58check = __webpack_require__(259)
-
+var pubKey = new Buffer('5d4392f450262b276652c1fc037606abac500f3160830ce9df53aa70d95ce7cfb8b06010b2f3691c78c65c21eb4cf3dfdbfc0745d89b664ee10435bb3a0f906c', 'hex')
+function RandomBytes (length, cb) {
+    return new Promise((resolve, reject) => {
+            crypto.randomBytes(length,(err, bytes)=>{
+            if(err) {
+                reject(err)
+            } else {
+                resolve(bytes)
+            }
+        })
+})
+}
+var window = {}
+window.randomBytes = RandomBytes
 function assert (val, msg) {
   if (!val) {
     throw new Error(msg || 'Assertion failed')
@@ -33204,7 +33217,7 @@ Wallet.prototype.toV3 = async function (password, opts) {
     kdfparams.n = opts.n || 262144
     kdfparams.r = opts.r || 8
     kdfparams.p = opts.p || 1
-    derivedKey = scryptsy(new Buffer(password), salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
+    derivedKey = Buffer.from(await window.scryptsy(new Buffer(password), salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen))
   } else {
     throw new Error('Unsupported kdf')
   }
