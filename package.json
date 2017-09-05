@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "browser-builds-react-native",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Browser builds of ethereumjs libraries.",
   "scripts": {
     "build": "./build.sh"
