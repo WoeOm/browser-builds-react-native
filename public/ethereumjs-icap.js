@@ -60,19 +60,19 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 430);
+/******/ 	return __webpack_require__(__webpack_require__.s = 504);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 181:
+/***/ 193:
 /***/ (function(module, exports, __webpack_require__) {
 
-var hex = __webpack_require__(182)
+var hex = __webpack_require__(194)
 
 // For simplicity we redefine it, as the default uses lowercase
 var BASE36_ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-var bs36 = __webpack_require__(77)(BASE36_ALPHABET)
+var bs36 = __webpack_require__(84)(BASE36_ALPHABET)
 
 var ICAP = {}
 
@@ -277,7 +277,7 @@ module.exports = ICAP
 
 /***/ }),
 
-/***/ 182:
+/***/ 194:
 /***/ (function(module, exports) {
 
 !function(globals) {
@@ -358,20 +358,20 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 430:
+/***/ 504:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
 global.EthJs = {
-  ICAP: __webpack_require__(181)
+  ICAP: __webpack_require__(193)
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 
-/***/ 77:
+/***/ 84:
 /***/ (function(module, exports) {
 
 // base-x encoding
